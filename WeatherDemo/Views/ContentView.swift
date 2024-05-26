@@ -12,8 +12,24 @@ struct ContentView: View {
     @StateObject var locationManager = LocationManager()
     
     var body: some View {
-        Text("Hello, world!")
-        .padding()
+        VStack {
+            
+            if let location = locationManager.location {
+                Text("Your coordinates are: \(location.longitude), \(location.latitude)")
+            } else {
+                if locationManager.isLoading {
+                    LoadingView()
+                } else {
+                    WelcomeView()
+                        .environmentObject(locationManager)
+                }
+            }
+            
+            
+        }.background(Color(.darkGray))
+            .preferredColorScheme(.dark)
+        
+        
     }
 }
 
